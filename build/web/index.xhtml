@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+	
+	<title>jQuery UI Example Page</title>
+        
+        <h:outputStylesheet library="css" name="main.css" />
+	
+
+</h:head>
+<h:body>
+    <h:form id="frMenu">
+            <p:menubar >
+                <p:menuitem value="CURSOS DE IDIOMAS" icon="ui-icon-home" url="index.xhtml"/>
+                 <f:facet name="options">
+            <p:inputText style="margin-right:10px" placeholder="Pesquisar"/>
+            <p:commandButton type="button" value="ACESSO" icon="ui-icon-extlink" />
+        </f:facet>
+            </p:menubar>
+        </h:form>
+
+<h:form>     
+    <p:tabView scrollable="true">
+        <p:tab title="HOME"> 
+        
+ 
+    
+ 
+    
+    <div id="bghome"  class="fakewindowcontain">
+    <p:graphicImage library="imagens" name="bghome.jpg" width="100%"  />
+    	<div id="loginhome" class="ui-widget ui-widget-content ui-corner-all">
+		<div class="ui-dialog-content ui-widget-content" style="background: none; border: 0;">
+                    <h:form id="frmLogin">
+                          <p:panel id="painelPF" 
+                     header="PRÉ-MATRÍCULA"  >
+                        <p:growl id="growl" showDetail="true" />
+                        
+    <h:panelGrid columns="2" >
+            <h:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="#{PessoaBean.pessoa.email}" required="true" label="username" />
+ 
+            <h:outputLabel for="password" value="Password:" />
+            <p:password id="password" value="#{PessoaBean.pessoa.pwd}" required="true" label="password" />
+ 
+            <f:facet name="footer">
+                <p:commandButton value="COMECE AGORA" update="@form" action="#{PessoaBean.login}"  />
+            </f:facet>  
+    </h:panelGrid></p:panel>
+                    </h:form>
+        </div>
+	</div>
+
+        
+        
+    
+    </div>
+ </p:tab>
+        <p:tab title="COMO FUNCIONA">
+        <div style="position: relative; width: 96%; height: 200px; padding:1% 2%; overflow:hidden;" class="fakewindowcontain">
+	<p>Lorem ipsum dolor sit amet,  Nulla nec tortor. Donec id elit quis purus consectetur consequat. </p><p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. </p><p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. </p><p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. </p><p>Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. </p><p>Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. </p>
+
+	<!-- ui-dialog -->
+	
+	<div style="position: absolute; width: 280px; height: 130px;left: 50px; top: 30px; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
+		<div class="ui-dialog-content ui-widget-content" style="background: none; border: 0;">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+		</div>
+	</div>
+
+</div>
+        </p:tab>
+        <p:tab title="NOSSAS UNIDADES">
+             <p:panel id="basic" header="Basic" footer="Movie Details" style="margin-bottom:20px">
+        <h:panelGrid columns="2" cellpadding="10">
+            <p:graphicImage library="imagens" name="/godfather/godfather1.jpg" />
+            <h:outputText
+                value="The story begins as Don Vito Corleone..." />
+        </h:panelGrid>
+    </p:panel>
+             <p:panel id="basic4" header="Basic" footer="Movie Details" style="margin-bottom:20px">
+        <h:panelGrid columns="2" cellpadding="10">
+            <p:graphicImage library="imagens" name="/godfather/godfather1.jpg" />
+            <h:outputText
+                value="The story begins as Don Vito Corleone..." />
+        </h:panelGrid>
+    </p:panel>
+             <p:panel id="basic1" header="Basic" footer="Movie Details" style="margin-bottom:20px">
+        <h:panelGrid columns="2" cellpadding="10">
+            <p:graphicImage library="imagens" name="/godfather/godfather1.jpg" />
+            <h:outputText
+                value="The story begins as Don Vito Corleone..." />
+        </h:panelGrid>
+    </p:panel>
+             <p:panel id="basic2"  header="Basic" footer="Movie Details" style="margin-bottom:20px">
+        <h:panelGrid columns="2" cellpadding="10">
+            <p:graphicImage library="imagens" name="/godfather/godfather1.jpg" />
+            <h:outputText
+                value="The story begins as Don Vito Corleone..." />
+        </h:panelGrid>
+    </p:panel>
+             <p:panel id="basic3" header="Basic" footer="Movie Details" style="margin-bottom:20px">
+        <h:panelGrid columns="2" cellpadding="10">
+            <p:graphicImage library="imagens" name="/godfather/godfather1.jpg" />
+            <h:outputText
+                value="The story begins as Don Vito Corleone..." />
+        </h:panelGrid>
+    </p:panel>
+        </p:tab>
+        <p:tab title="NOSSA EQUIPE">CONTATO</p:tab>
+        <p:tab title="PLANOS E PREÇOS">CONTATO</p:tab>
+        <p:tab title="PERGUNTAS FREQUENTES">FAQ</p:tab>
+        <p:tab title="CONTATO">CONTATO</p:tab>
+        
+    </p:tabView>
+</h:form>
+     <h:form id="frFooter" >
+         <p:menubar class="centeredMenuBar" >
+                <p:menuitem value="CURSOS DE IDIOMAS" icon="ui-icon-home" url="index.xhtml"/>
+                <p:menuitem value="FALE CONOSCO" icon="ui-icon-mail-closed" url="index.xhtml"/>
+                <p:menuitem value="SOBRE NÓS" icon="ui-icon-carat-1-e" url="index.xhtml"/>
+                <p:menuitem value="POLÍTICA DE PRIVACIDADE" icon="ui-icon-carat-1-e" url="index.xhtml"/>
+                <p:menuitem value="TERMOS &amp; CONDIÇÕES" icon="ui-icon-carat-1-e" url="index.xhtml"/>
+                <p:menuitem value="MAPA DO SITE" icon="ui-icon-carat-1-e" url="index.xhtml"/>
+            </p:menubar>
+        </h:form>
+
+</h:body>
+</html>

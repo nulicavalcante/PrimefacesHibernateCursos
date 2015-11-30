@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Cadastro de Cursos de Idiomas</title>
+        <h:outputStylesheet library="css" name="main.css" />
+    </h:head>
+    <h:body>
+    <ui:insert name="header" >
+		  <ui:include src="header.xhtml" />
+                 
+    </ui:insert>
+        <h:form id="frmCadastro">
+            <p:panel id="painelPF" 
+                     header="Cadastro de Cursos"
+                     footer="Cursos de Idiomas">
+                <p:growl id="growl" showDetail="true"/>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="ID:"/>
+                    <p:inputText value="#{CursoBean.curso.id}"
+                                 readonly="true" />
+                    
+                    <p:outputLabel value="Nome:"/>
+                    <p:inputText value="#{CursoBean.curso.nome}" required="true"/>
+                    
+                    <p:commandButton value="Salvar" icon="ui-icon-circle-plus"
+                                     actionListener="#{CursoBean.salvar}"
+                                     update="@form"/>
+                    <p:commandButton value="Novo" update="@form" icon="ui-icon-document"  actionListener="#{CursoBean.reset}"/>
+                </h:panelGrid>
+                
+                <p:dataTable value="#{CursoBean.listaCursos}" var="curso"
+                             emptyMessage="Nenhum curso foi encontrado"
+                             rows="4" paginator="true" paginatorPosition="top" 
+                             id="tblCursos">
+                    <f:facet name="footer">
+                        <h:commandLink>
+                            <p:graphicImage library="imagens" name="pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="tblCursos"
+                                            fileName="Cursos"/>
+                        </h:commandLink>
+                    </f:facet>
+                    <p:column headerText="ID" sortBy="#{curso.id}">
+                        <h:outputText value="#{curso.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{curso.nome}"/>
+                    </p:column>
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":frmCadastro" 
+                                         icon="ui-icon-pencil" title="Editar">
+                            <f:setPropertyActionListener value="#{curso}" 
+                                                         target="#{CursoBean.curso}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":frmCadastro" 
+                                         icon="ui-icon-trash" title="Excluir"
+                                         actionListener="#{CursoBean.excluir(curso)}">
+                            <p:confirm header="Confirmar Exclusão"
+                                       message="Você quer realmente excluir esse registro?"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <p:confirmDialog global="true" showEffect="fade" 
+                                 hideEffect="explode">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes"
+                                     icon="ui-icon-check"/>
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close"/>
+                </p:confirmDialog>
+            </p:panel>
+        </h:form>
+           </h:body>
+</html>
+

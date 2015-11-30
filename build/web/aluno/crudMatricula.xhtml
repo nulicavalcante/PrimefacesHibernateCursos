@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <h:head>
+        <title>Cadastro de Matrículas nos Cursos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="main.css" />
+    </h:head>
+    <h:body onload="#{MatriculaBean.matricula.setPessoa(PessoaBean.usuarioLogado)}">
+        <ui:insert name="header" >
+            <ui:include src="topAluno.xhtml" />
+
+        </ui:insert>
+        <h1>Bem-vindo, #{PessoaBean.usuarioLogado.nome}</h1>
+        <h:form id="frmCadastro">
+            <p:panel id="painelPF" 
+                     header="Cadastro de Matrículas"
+                     footer="Cursos de Idiomas">
+                <p:growl id="growl" showDetail="true"/>
+                <h:panelGrid id="panelG" columns="2">
+                    <p:outputLabel value="ID:"/>
+                    <p:inputText value="#{MatriculaBean.matricula.id}"
+                                 readonly="true" />
+                    <p:outputLabel for="turma" value="Turma:"/>
+                    <p:selectOneMenu id="turma" value="#{MatriculaBean.matricula.turma}" required="true">
+
+                        <f:selectItems value="#{MatriculaBean.listaTurmas}" var="turma" itemValue="#{turma}" itemLabel="#{turma.curso.nome} - #{turma.sala} - #{MatriculaBean.format(turma.horarioInicio)}"/>
+
+                    </p:selectOneMenu>  
+                
+                    <p:commandButton value="Salvar" icon="ui-icon-circle-plus"
+                                     actionListener="#{MatriculaBean.salvar(PessoaBean.usuarioLogado)}" update="@form" oncomplete="#{MatriculaBean.listaMatriculas}"  
+                                     />
+                    <p:commandButton value="Novo" update="@form" icon="ui-icon-document"  actionListener="#{MatriculaBean.reset}" />
+
+                </h:panelGrid>
+                
+                <p:dataTable  value="#{MatriculaBean.listaMatriculas}" var="matricula" widgetVar="matriculaTable"
+                             emptyMessage="Nenhuma matricula foi encontrada" filteredValue="#{MatriculaBean.filteredMatriculas}"
+                             rows="4" paginator="true" paginatorPosition="top" 
+                             id="tblMatriculas">
+                    <f:facet name="footer">
+                        <h:commandLink>
+                            <p:graphicImage library="imagens" name="pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="tblMatriculas"
+                                            fileName="Matriculas"/>
+                        </h:commandLink>
+                    </f:facet>
+                    <p:column filterBy="#{matricula.id}" headerText="ID" sortBy="#{matricula.id}" filterMatchMode="contains">
+                        <h:outputText value="#{matricula.id}"/>
+                    </p:column>
+                    <p:column filterBy="#{matricula.nota}" headerText="Nota" filterMatchMode="contains">
+                        <h:outputText value="#{matricula.nota}"/>
+                    </p:column>
+                    <p:column filterBy="#{matricula.faltas}" headerText="Faltas" filterMatchMode="contains">
+                        <h:outputText value="#{matricula.faltas}"/>
+                    </p:column>
+                 <p:column filterBy="#{matricula.turma}" headerText="Turma" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('matriculaTable').filter()" >
+                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{MatriculaBean.listaTurmas}" var="turma" itemLabel="#{turma.curso.nome} - #{turma.sala} - #{MatriculaBean.format(turma.horarioInicio)}" itemValue="#{turma}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{matricula.turma.curso.nome} - #{matricula.turma.sala} - #{MatriculaBean.format(matricula.turma.horarioInicio)}"/>
+
+
+                    </p:column>  
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":frmCadastro" 
+                                         icon="ui-icon-pencil" title="Editar">
+                            <f:setPropertyActionListener value="#{matricula}" 
+                                                         target="#{MatriculaBean.matricula}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":frmCadastro" 
+                                         icon="ui-icon-trash" title="Excluir"
+                                         actionListener="#{MatriculaBean.excluir(matricula)}">
+                            <p:confirm header="Confirmar Exclusão"
+                                       message="Você quer realmente excluir esse registro?"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+               
+                <p:confirmDialog global="true" showEffect="fade" 
+                                 hideEffect="explode">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes"
+                                     icon="ui-icon-check"/>
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close"/>
+                </p:confirmDialog>
+                 
+            
+            </p:panel>
+        </h:form>
+
+    </h:body>
+</html>

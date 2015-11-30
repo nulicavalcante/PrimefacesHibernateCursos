@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Cadastro de Cursos de Idiomas</title>
+        <h:outputStylesheet library="css" name="main.css" />
+    </h:head>
+    <h:body>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+
+        </ui:insert>
+        <h:form id="frmCadastro">
+            <p:panel id="painelPF" 
+                     header="Cadastro de Avaliações"
+                     footer="Cursos de Idiomas">
+                <p:growl id="growl" showDetail="true"/>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="ID:"/>
+                    <p:inputText value="#{AvaliacaoBean.avaliacao.id}"
+                                 readonly="true" />
+
+                    <p:outputLabel value="Tipo:"/>
+                    <p:inputText value="#{AvaliacaoBean.avaliacao.tipo}" required="true"/>
+
+                    <p:outputLabel for="dataAval" value="Data de Avaliação:"/>
+                    <p:calendar id="dataAval" value="#{AvaliacaoBean.avaliacao.dataAval}" pattern="dd/MM/yyyy" mask="true" required="true"/>
+
+
+                    <p:outputLabel for="turma" value="Turma:"/>
+                    <p:selectOneMenu id="turma" value="#{AvaliacaoBean.avaliacao.turma}" required="true">
+
+                        <f:selectItems value="#{AvaliacaoBean.listaTurmas}" var="turma" itemValue="#{turma}" itemLabel="#{turma.id} - #{turma.sala} - #{AvaliacaoBean.format(turma.horarioInicio)}"/>
+
+                    </p:selectOneMenu>  
+                    <p:commandButton value="Salvar" icon="ui-icon-circle-plus"
+                                     actionListener="#{AvaliacaoBean.salvar}"
+                                     update="@form"/>
+                    <p:commandButton value="Novo" update="@form" icon="ui-icon-document"  actionListener="#{AvaliacaoBean.reset}"/>
+                </h:panelGrid>
+                <p:dataTable value="#{AvaliacaoBean.listaAvaliacoes}" var="avaliacao" widgetVar="avalTable"
+                             emptyMessage="Nenhuma avaliação foi encontrada" filteredValue="#{AvaliacaoBean.filteredAval}"
+                             rows="4" paginator="true" paginatorPosition="top" 
+                             id="tblAvaliacoes">
+                    <f:facet name="footer">
+                        <h:commandLink>
+                            <p:graphicImage library="imagens" name="pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="tblAvaliacoes"
+                                            fileName="Avaliacoes"/>
+                        </h:commandLink>
+                    </f:facet>
+                    <p:column filterBy="#{avaliacao.id}" headerText="ID" sortBy="#{avaliacao.id}">
+                        <h:outputText value="#{avaliacao.id}"/>
+                    </p:column>
+                    <p:column filterBy="#{avaliacao.tipo}" headerText="Tipo" filterMatchMode="contains">
+                        <h:outputText value="#{avaliacao.tipo}"/>
+                    </p:column>
+                    <p:column headerText="Data de Avaliação">
+                        <h:outputText value="#{avaliacao.dataAval}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column filterBy="#{avaliacao.turma}" headerText="Turma" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('avalTable').filter()" >
+                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{AvaliacaoBean.listaTurmas}" var="turma" itemLabel="#{turma.id} - #{turma.sala} - #{AvaliacaoBean.format(turma.horarioInicio)}" itemValue="#{turma}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{avaliacao.turma.id} - #{avaliacao.turma.sala} - #{AvaliacaoBean.format(avaliacao.turma.horarioInicio)}"/>
+
+
+                    </p:column>
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":frmCadastro" 
+                                         icon="ui-icon-pencil" title="Editar">
+                            <f:setPropertyActionListener value="#{avaliacao}" 
+                                                         target="#{AvaliacaoBean.avaliacao}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":frmCadastro" 
+                                         icon="ui-icon-trash" title="Excluir"
+                                         actionListener="#{AvaliacaoBean.excluir(avaliacao)}">
+                            <p:confirm header="Confirmar Exclusão"
+                                       message="Você quer realmente excluir esse registro?"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <p:confirmDialog global="true" showEffect="fade" 
+                                 hideEffect="explode">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes"
+                                     icon="ui-icon-check"/>
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close"/>
+                </p:confirmDialog>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
+

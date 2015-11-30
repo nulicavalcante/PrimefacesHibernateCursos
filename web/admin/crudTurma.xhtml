@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Cadastro de Turmas dos Cursos</title>
+        <h:outputStylesheet library="css" name="main.css" />
+    </h:head>
+    <h:body>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+
+        </ui:insert>
+        <h:form id="frmCadastro">
+            <p:panel id="painelPF" 
+                     header="Cadastro de Turmas"
+                     footer="Cursos de Idiomas">
+                <p:growl id="growl" showDetail="true"/>
+                <h:panelGrid id="panelG" columns="2">
+                    <p:outputLabel value="ID:"/>
+                    <p:inputText value="#{TurmaBean.turma.id}"
+                                 readonly="true" />
+
+                    <p:outputLabel value="Sala:"/>
+                    <p:inputText value="#{TurmaBean.turma.sala}" />
+
+
+
+                    <p:outputLabel for="horarioInicio" value="Horario Início:"/>
+                    <p:calendar id="horarioInicio" value="#{TurmaBean.turma.horarioInicio}" pattern="HH:mm" timeOnly="true" >
+
+                    </p:calendar>
+
+                    <p:outputLabel for="horarioFinal" value="Horario Final:"/>
+                    <p:calendar id="horarioFinal" value="#{TurmaBean.turma.horarioFinal}" pattern="HH:mm" timeOnly="true"  >
+
+                    </p:calendar>
+
+                    <p:outputLabel for="curso" value="Curso: "  />
+
+                    <p:selectOneMenu id="curso" value="#{TurmaBean.turma.curso}" >
+
+                        <f:selectItems value="#{TurmaBean.listaCursos}" var="curso" itemLabel="#{curso.nome}"/>
+                    </p:selectOneMenu>                        
+
+                    <p:commandButton value="Salvar" icon="ui-icon-circle-plus"
+                                     actionListener="#{TurmaBean.salvar}"
+                                     update="@form"/>
+                    <p:commandButton value="Novo" update="@form" icon="ui-icon-document"  actionListener="#{TurmaBean.reset}"/>
+
+                </h:panelGrid>
+
+                <p:dataTable value="#{TurmaBean.listaTurmas}" var="turma" widgetVar="turmaTable"
+                             emptyMessage="Nenhuma turma foi encontrada" filteredValue="#{TurmaBean.filteredTurmas}"
+                             rows="4" paginator="true" paginatorPosition="top" 
+                             id="tblTurmas">
+                    <f:facet name="footer">
+                        <h:commandLink>
+                            <p:graphicImage library="imagens" name="pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="tblTurmas"
+                                            fileName="Turmas"/>
+                        </h:commandLink>
+                    </f:facet>
+                    <p:column filterBy="#{turma.id}" headerText="ID" sortBy="#{turma.id}" filterMatchMode="contains">
+                        <h:outputText value="#{turma.id}"/>
+                    </p:column>
+                    <p:column filterBy="#{turma.sala}" headerText="Sala" filterMatchMode="contains">
+                        <h:outputText value="#{turma.sala}"/>
+                    </p:column>
+                    <p:column filterBy="#{turma.curso}" headerText="Curso" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('turmaTable').filter()" >
+                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{TurmaBean.listaCursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{turma.curso.nome}">
+
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Horario Início">
+                        <h:outputText value="#{TurmaBean.format(turma.horarioInicio)}">
+
+                        </h:outputText>
+                    </p:column>    
+                    <p:column headerText="Horario Final">
+                        <h:outputText value="#{TurmaBean.format(turma.horarioFinal)}">
+
+                        </h:outputText>
+                    </p:column>    
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":frmCadastro" 
+                                         icon="ui-icon-pencil" title="Editar">
+                            <f:setPropertyActionListener value="#{turma}" 
+                                                         target="#{TurmaBean.turma}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":frmCadastro" 
+                                         icon="ui-icon-trash" title="Excluir"
+                                         actionListener="#{TurmaBean.excluir(turma)}">
+                            <p:confirm header="Confirmar Exclusão"
+                                       message="Você quer realmente excluir esse registro?"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <p:confirmDialog global="true" showEffect="fade" 
+                                 hideEffect="explode">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes"
+                                     icon="ui-icon-check"/>
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close"/>
+                </p:confirmDialog>
+            </p:panel>
+        </h:form>
+
+    </h:body>
+</html>
+
