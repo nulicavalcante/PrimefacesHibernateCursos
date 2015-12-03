@@ -143,11 +143,11 @@ public class PessoaBean implements Serializable {
         FacesMessage fm = new FacesMessage();
         fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Logout", "Logout realizado com sucesso !");
         context.addMessage(null, fm);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/Cursos/faces/index.xhtml");
     }
 
     public void goToLogin() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/Cursos/faces/login.xhtml");
     }
 
     private void goToMatricula() throws IOException {
