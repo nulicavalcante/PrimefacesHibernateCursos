@@ -40,8 +40,7 @@ and open the template in the editor.
                     </p:selectOneMenu>  
                 
                     <p:commandButton value="Salvar" icon="ui-icon-circle-plus"
-                                     actionListener="#{MatriculaBean.salvar(PessoaBean.usuarioLogado)}" update="@form" oncomplete="#{MatriculaBean.listaMatriculas}"  
-                                     />
+                                     actionListener="#{MatriculaBean.salvar(PessoaBean.usuarioLogado)}" update="@form" oncomplete="#{MatriculaBean.listaMatriculas}" />
                     <p:commandButton value="Novo" update="@form" icon="ui-icon-document"  actionListener="#{MatriculaBean.reset}" />
 
                 </h:panelGrid>

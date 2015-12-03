@@ -5,13 +5,12 @@
  */
 package controlador;
 
-
 import dao.DAOFactory;
 import dao.PessoaDAO;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import modelo.Pessoa;
@@ -23,22 +22,21 @@ import modelo.Pessoa;
 @ManagedBean(name = "PessoaBean")
 @SessionScoped
 public class PessoaBean implements Serializable {
-    
+
     private Pessoa pessoa;
     private Pessoa usuarioLogado;
-    
+
     /**
      * Creates a new instance of PessoaBean
      */
     public PessoaBean() {
         pessoa = new Pessoa();
         usuarioLogado = new Pessoa();
-    
-    
+
     }
     //True se usuário está logado e false caso contrário 
     private boolean loggedIn;
-    
+
     public boolean isLoggedIn() {
         return loggedIn;
     }
@@ -47,8 +45,6 @@ public class PessoaBean implements Serializable {
         this.loggedIn = loggedIn;
     }
 
-    
-    
     public Pessoa getUsuarioLogado() {
         return usuarioLogado;
     }
@@ -65,62 +61,97 @@ public class PessoaBean implements Serializable {
         this.pessoa = pessoa;
     }
 
-    public String login() {
+    public String salvar() {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage fm = new FacesMessage();
         String msg = "";
         try {
             PessoaDAO dao = DAOFactory.criarPessoaDAO();
-            Pessoa usuarioEncontrado = dao.login(pessoa.getEmail(), pessoa.getPwd());
-            if (usuarioEncontrado!=null) {
-                //caso tenha retornado um usuario, setamos a variável loggedIn como true e guardamos o usuario encontrado na variável usuarioLogado. Depois de tudo, mandamos o usuário 
-                //para a página index.xhtml 
-                loggedIn = true;
-                usuarioLogado = usuarioEncontrado;
-
-                msg = "Bem-vindo, " + usuarioEncontrado.getNome() + "! ";
-    
-                
+            Pessoa usuarioEncontrado = dao.getPorEmail(pessoa.getEmail());
+            if (usuarioEncontrado == null) {
+                dao.salvar(pessoa);
+                msg = "ID: " + pessoa.getEmail() + " | Nome: " + pessoa.getNome();
                 fm = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Login", msg);
+                        "Sucesso ao salvar!", msg);
+                loggedIn = true;
+                usuarioLogado = pessoa;
                 pessoa = new Pessoa();
                 return "/aluno/crudMatricula";
             } else {
-                msg = "ERRO," + pessoa.getEmail()+ "! ";
+                msg = "ERRO, já cadastrado: " + pessoa.getEmail() + "! ";
                 fm = new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Login", msg);
-                System.out.println("Passei");
-                
                 return "index";
             }
         } catch (Exception e) {
             msg = e.getMessage();
             fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Problemas ao logar ", msg);
+                    "Problemas ao salvar ", msg);
             return "index";
         } finally {
             context.addMessage(null, fm);
         }
 
     }
+
+    public void login() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage fm = new FacesMessage();
+        String msg = "";
+        try {
+            PessoaDAO dao = DAOFactory.criarPessoaDAO();
+            Pessoa usuarioEncontrado = dao.login(pessoa.getEmail(), pessoa.getPwd());
+            if (usuarioEncontrado != null) {
+                //caso tenha retornado um usuario, setamos a variável loggedIn como true e guardamos o usuario encontrado na variável usuarioLogado. Depois de tudo, mandamos o usuário 
+                //para a página index.xhtml 
+                loggedIn = true;
+                usuarioLogado = usuarioEncontrado;
+
+                msg = "Bem-vindo, " + usuarioEncontrado.getNome() + "! ";
+
+                fm = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Login", msg);
+                pessoa = new Pessoa();
+                goToMatricula();
+            } else {
+                msg = "ERRO," + pessoa.getEmail() + "! ";
+                fm = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Login", msg);
+                System.out.println("Passei");
+
+            }
+        } catch (Exception e) {
+            msg = e.getMessage();
+            fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Problemas ao logar ", msg);
+
+        } finally {
+            context.addMessage(null, fm);
+        }
+
+    }
 //Realiza o logout do usuário logado 
-    public String logout(){ 
+
+    public void logout() throws IOException {
 //Setamos a variável usuarioLogado como nulo, ou seja, limpamos 
 //os dados do usuário que estava logado e depois setamos a variável 
 //loggedIn como false para sinalizar que o usuário não está mais logado 
-     usuarioLogado = null; 
-     loggedIn = false; 
+        usuarioLogado = null;
+        loggedIn = false;
 //Mostramos um mensagem ao usuário e redirecionamos ele para a página de login 
-     FacesContext context = FacesContext.getCurrentInstance();
-    FacesMessage fm = new FacesMessage();
-    fm = new FacesMessage(FacesMessage.SEVERITY_INFO,"Logout", "Logout realizado com sucesso !");
-    context.addMessage(null, fm);
-     return "/faces/index.xhtml";
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage fm = new FacesMessage();
+        fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Logout", "Logout realizado com sucesso !");
+        context.addMessage(null, fm);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml");
     }
 
-    
+    public void goToLogin() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+    }
 
-
-
+    private void goToMatricula() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("aluno/crudMatricula.xhtml");
+    }
 
 }

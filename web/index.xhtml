@@ -7,7 +7,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
 	
-	<title>jQuery UI Example Page</title>
+	<title>Cursos de Idiomas</title>
         
         <h:outputStylesheet library="css" name="main.css" />
 	
@@ -19,7 +19,7 @@
                 <p:menuitem value="CURSOS DE IDIOMAS" icon="ui-icon-home" url="index.xhtml"/>
                  <f:facet name="options">
             <p:inputText style="margin-right:10px" placeholder="Pesquisar"/>
-            <p:commandButton type="button" value="ACESSO" icon="ui-icon-extlink" />
+            <p:commandButton value="ACESSO" icon="ui-icon-extlink" actionListener="#{PessoaBean.goToLogin}" />
         </f:facet>
             </p:menubar>
         </h:form>
@@ -42,14 +42,34 @@
                         <p:growl id="growl" showDetail="true" />
                         
     <h:panelGrid columns="2" >
+            <h:outputLabel for="nome" value="Nome:" />
+            <p:inputText id="nome" value="#{PessoaBean.pessoa.nome}" required="true" label="nome completo" />
+            
+            <h:outputLabel for="telefone" value="Telefone:" />
+            <p:inputText id="telefone" value="#{PessoaBean.pessoa.telefone}" required="true" label="telefone" />
+            
             <h:outputLabel for="username" value="Username:" />
             <p:inputText id="username" value="#{PessoaBean.pessoa.email}" required="true" label="username" />
  
             <h:outputLabel for="password" value="Password:" />
             <p:password id="password" value="#{PessoaBean.pessoa.pwd}" required="true" label="password" />
- 
+                
+            <h:outputLabel for="logradouro" value="Logradouro:" />
+            <p:inputText id="logradouro" value="#{PessoaBean.pessoa.logradouro}" required="true" label="logradouro" />
+            
+            <h:outputLabel for="numero" value="Numero:" />
+            <p:inputText id="numero" value="#{PessoaBean.pessoa.numero}" required="true" label="numero" />
+            
+            <h:outputLabel for="bairro" value="Bairro:" />
+            <p:inputText id="bairro" value="#{PessoaBean.pessoa.bairro}" required="true" label="bairro" />
+            
+            <h:outputLabel for="cep" value="CEP:" />
+            <p:inputText id="cep" value="#{PessoaBean.pessoa.cep}" required="true" label="CEP" />
+            
+            <h:outputLabel for="cidade" value="Cidade:" />
+            <p:inputText id="cidade" value="#{PessoaBean.pessoa.cidade}" required="true" label="cidade" />
             <f:facet name="footer">
-                <p:commandButton value="COMECE AGORA" update="@form" action="#{PessoaBean.login}"  />
+                <p:commandButton value="COMECE AGORA" update="@form" action="#{PessoaBean.salvar}"  />
             </f:facet>  
     </h:panelGrid></p:panel>
                     </h:form>

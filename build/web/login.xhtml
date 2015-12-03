@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Login - Cursos de Idiomas</title>
+        <h:outputStylesheet library="css" name="main.css" />
+    </h:head>
+    <h:body>
+        <div id="logarAdmin" class="ui-widget-content">
+        <h:form id="frmLogarAdmin">
+            <p:panel id="painelPF" 
+                     header="Login"
+                     footer="Cursos de Idiomas">
+                <p:growl id="growl" showDetail="true"/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="username" value="Username:" />
+                    <p:inputText id="username" value="#{PessoaBean.pessoa.email}" required="true" label="username" />
+
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:password id="password" value="#{PessoaBean.pessoa.pwd}" required="true" label="password" />
+
+                    
+                    <p:commandButton value="Entrar" 
+                                     actionListener="#{PessoaBean.login}"
+                                     update="@form"/>
+                  
+                </h:panelGrid>
+                
+           
+            </p:panel>
+        </h:form>
+            </div>
+           </h:body>
+</html>
+

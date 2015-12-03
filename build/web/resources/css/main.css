@@ -19,11 +19,15 @@ body{
 .centeredMenuBar .ui-menu-list {
     display: inline-block;
 }
+
+
+#logarAdmin{ width: 280px; margin: auto; padding: 10px; }
+
 #bghome{
     position: relative; width: 96%;  padding:1% 2%; overflow:hidden;
 }
 #loginhome{
-    position: absolute; width: 280px; height: 130px; right: 50px; top: 30px; padding: 10px;
+    position: absolute; width: 280px;  right: 50px; top: 30px; padding: 10px;
 }
 .demoHeaders {
     margin-top: 2em;

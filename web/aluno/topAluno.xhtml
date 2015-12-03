@@ -19,7 +19,7 @@
                 <p:submenu label="Relatórios" icon="ui-icon-pencil"></p:submenu>
                 <f:facet name="options">
             <p:inputText style="margin-right:10px" placeholder="Pesquisar"/>
-            <p:commandButton  value="LOGOUT" action="#{PessoaBean.logout}" icon="ui-icon-power" update="@form" />
+            <p:commandButton  value="LOGOUT" actionListener="#{PessoaBean.logout}" icon="ui-icon-power" update="@form" />
         </f:facet>
             </p:menubar>
         </h:form>
