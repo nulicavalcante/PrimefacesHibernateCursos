@@ -3,16 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/2015%20Engenharia/Curso5/src/java/controlador/CursoBean.java</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/web/admin/crudCurso.xhtml</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/src/java/controlador/LoginFilter.java</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/web/aluno/crudMatricula.xhtml</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/web/index.xhtml</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/src/java/controlador/PessoaBean.java</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/web/resources/css/main.css</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/web/login.xhtml</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/web/aluno/topAluno.xhtml</file>
-            <file>file:/E:/2015%20Engenharia/Curso5/src/java/controlador/FiltroBD.java</file>
+            <file>file:/D:/git/PrimefacesHibernateCursos/web/index.xhtml</file>
+            <file>file:/D:/git/PrimefacesHibernateCursos/src/java/dao/PessoaDAO.java</file>
+            <file>file:/D:/git/PrimefacesHibernateCursos/web/login.xhtml</file>
+            <file>file:/D:/git/PrimefacesHibernateCursos/.git/config</file>
+            <file>file:/D:/git/PrimefacesHibernateCursos/web/aluno/topAluno.xhtml</file>
+            <file>file:/D:/git/PrimefacesHibernateCursos/web/admin/header.xhtml</file>
+            <file>file:/D:/git/PrimefacesHibernateCursos/src/java/controlador/PessoaBean.java</file>
         </group>
     </open-files>
 </project-private>

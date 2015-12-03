@@ -69,7 +69,7 @@
             <h:outputLabel for="cidade" value="Cidade:" />
             <p:inputText id="cidade" value="#{PessoaBean.pessoa.cidade}" required="true" label="cidade" />
             <f:facet name="footer">
-                <p:commandButton value="COMECE AGORA" update="@form" action="#{PessoaBean.salvar}"  />
+                <p:commandButton value="COMECE AGORA" update="growl" action="#{PessoaBean.salvar}" />
             </f:facet>  
     </h:panelGrid></p:panel>
                     </h:form>

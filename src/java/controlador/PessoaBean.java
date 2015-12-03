@@ -61,6 +61,7 @@ public class PessoaBean implements Serializable {
         this.pessoa = pessoa;
     }
 
+    
     public String salvar() {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage fm = new FacesMessage();
@@ -151,7 +152,7 @@ public class PessoaBean implements Serializable {
     }
 
     private void goToMatricula() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("aluno/crudMatricula.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/Cursos/faces/aluno/crudMatricula.xhtml");
     }
 
 }

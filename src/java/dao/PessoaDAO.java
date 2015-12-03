@@ -27,12 +27,11 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
         }
     }
     public Pessoa getPorEmail(String email) {
-        try {
-            return (Pessoa) getSessao().get(Pessoa.class, email);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+            Criteria c = getSessao().createCriteria(Pessoa.class);
+        
+            c.add(Restrictions.eq("email", email));
+        
+            return (Pessoa) c.uniqueResult();
     }
     public List<Pessoa> listarTodos() {
         Criteria c = getSessao().createCriteria(Pessoa.class);
